@@ -1,11 +1,10 @@
 Package: specanalysis
 Type: Package
-Title: What the Package Does (Title Case)
+Title: FerroZine Spectral Analysis
 Version: 0.1.0
-Author: Who wrote it
-Maintainer: The package maintainer <yourself@somewhere.net>
-Description: More about what it does (maybe more than one line)
-    Use four spaces when indenting paragraphs within the Description.
+Author: Jake Perez
+Maintainer: Jake Perez <jacobtperez14@gmail.com>
+Description: Performs analysis on a set of samples with spectral data and extrapolates concentrations.
 License: What license is it under?
 Encoding: UTF-8
 LazyData: true
