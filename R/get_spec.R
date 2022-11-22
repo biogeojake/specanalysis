@@ -1,7 +1,11 @@
+#'Retrieve Spectral Values
 #'
+#'@description get_spec() parses a text file to extract only the absorption and wavelength values
 #'
 #'@param txtfile Takes in a character that corresponds to a text file that contains spectral data. This is designed to parse the structure from the collaborator's sepctrophotometer.
 #'@returns A dataframe with wavelengths and absorbance
+#'
+#'@export
 
 
 get_spec <- function(txtfile) {
