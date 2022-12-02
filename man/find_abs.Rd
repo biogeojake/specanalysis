@@ -4,7 +4,12 @@
 \alias{find_abs}
 \title{Find Absorbance Value}
 \usage{
-find_abs(txtfile)
+find_abs(txtfile, wl = 562)
+}
+\arguments{
+\item{txtfile}{Takes in a character value that corresponds to a textfile with spectral data}
+
+\item{wl}{Takes in a numeric value that corresponds to the wavelength you would like to extract absorbance values from. The default value is 562 for FerroZine assays}
 }
 \description{
 Retrieves the absorbance value for FerroZine measurements
