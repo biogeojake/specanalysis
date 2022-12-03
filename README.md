@@ -24,8 +24,6 @@ library(specanalysis)
 
 ## Prerequisites
 
-------------------------------------------------------------------------
-
 Your data should be summarized in the following manner:
 
 -   `standards.csv` - A csv file that contains a column with concentrations (mg Fe/L) and the corresponding filenames to their spectrophotometric measurements
@@ -34,18 +32,41 @@ Your data should be summarized in the following manner:
 
 -   `raw_fz_files` - A folder with textfiles that are the ones being referenced in `standards.csv` and `iron_raw_data.csv`
 
-## Analyze Standards
+## Import Data
 
-------------------------------------------------------------------------
-
-Using the `tidyverse` package, read the `standards.csv` file using `read_csv()`. You should then be able to use the `analyze_set()` function from the `specanalysis` package to retrieve the wavelength and absorbance values for each standard.
+Once your working directory is formatted correctly, import your data using the `read_csv()` function from `tidyverse`. You will need to do this for both the standards and the samples:
 
 ```{r}
 library(tidyverse)
 
-stds <- read_csv("standards.csv")
+stds <- read_csv('standards.csv')
 
-stds <- analyze_set(stds)
+samples <- read_csv('iron_raw_data.csv')
 ```
 
-A linear model can then be derived using the concentrations column and the absorbance column in the new dataframe.
+## Check Data Format
+
+In order for the package functions to work, the dataframes should be formatted in a specific way. This includes having a column called `filename` and that the filenames themselves have the `.txt` extensions.
+
+The `check_set()` function in this package will check that the `filename` column is present and add the file extension if it is not present.
+
+```{r}
+stds <- check_set(stds)
+
+samples <- check_set(samples)
+```
+
+If there are any error messages, you will need to resolve the formatting discrepancies.
+
+## Pulling Spectral Information
+
+The wavelength and absorbance of interest (`specanalysis` currently only supports pulling 562 nm for FerroZine measurements) will be extracted using the `analyze_set()` function. You will want to specify the `home` directory (i.e. where you would like to keep your work at) and the `specdir` (i.e. where the spectral files are located) in order to cleanly read the text files.
+
+```{r}
+
+#home.directory = *Set the path to the directory of the files*
+
+p_stds <- analyze_set(stds, home = home.directory, specdir = './raw_fz_files')
+
+p_samples <- analyze_set(samples, home = home.directory, specdir = './raw_fz_files')
+```
