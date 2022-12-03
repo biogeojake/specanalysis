@@ -4,7 +4,7 @@
 \alias{find_abs}
 \title{Find Absorbance Value}
 \usage{
-find_abs(txtfile, wl = 562)
+find_abs(txtfile)
 }
 \arguments{
 \item{txtfile}{Takes in a character value that corresponds to a textfile with spectral data}
