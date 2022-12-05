@@ -26,9 +26,9 @@ library(specanalysis)
 
 Your data should be summarized in the following manner:
 
--   `standards.csv` - A csv file that contains a column with concentrations (mg Fe/L) and the corresponding filenames to their spectrophotometric measurements
+-   `standards.csv` - A csv file that contains a column with `concentration` (mg Fe/L) and the corresponding `filename` to their spectrophotometric measurements
 
--   `iron_raw_data.csv` - A csv with your samples and their filenames. Any number of metadata can be added. As long as the file is tidy (i.e. each row is an observation), it should be fine.
+-   `iron_raw_data.csv` - A csv with your samples and their `filename`. Any number of metadata can be added. As long as the file is tidy (i.e. each row is an observation), it should be fine.
 
 -   `raw_fz_files` - A folder with textfiles that are the ones being referenced in `standards.csv` and `iron_raw_data.csv`
 
@@ -69,4 +69,46 @@ The wavelength and absorbance of interest (`specanalysis` currently only support
 p_stds <- analyze_set(stds, home = home.directory, specdir = './raw_fz_files')
 
 p_samples <- analyze_set(samples, home = home.directory, specdir = './raw_fz_files')
+```
+
+## Creating a Calibration Curve
+
+The calibration curve will be made using the processed standard data and will take advantage of the custom `calibrate_set()` function within the `specanalysis` package.
+
+```{r}
+calibration <- calibrate_set(p_stds)
+```
+
+This function will hopefully prompt any QC analysis in the future. For now, it strictly returns slope and intercept and it is up to the user to evaluate the quality of the calibration.
+
+## Calculating Concentrations
+
+To then calculate the concentrations of the sample set, we can use `calc_conc()` to give extract concentrations.
+
+```{r}
+proc_samples <- calc_conc(p_samples, curve = calibration, dilution = 1)
+```
+
+The dilution factor could be adjusted to account for any secondary dilutions or extract volume conversions.
+
+## Analysis Assessment
+
+It is highly recommended that a plot be made to look at the linearity of the standards, the quality of the calibration, and look for sample that lie outside of the calibration curve. Future version of this package aim to provide functions to do this.
+
+------------------------------------------------------------------------
+
+## Quick Start
+
+To concisely perform the analysis, you may also use the following code block:
+
+```{r}
+calibration <- stds %>%
+  check_set() %>%
+  analyze_set(home = home.directory, specdir = "./raw_fz_files") %>%
+  calibrate_set()
+
+proc_samples <- samples %>%
+  check_set() %>%
+  analyze_set(home = home.directory, specdir = "./raw_fz_files") %>%
+  calc_conc(curve = calibration, dilution = 1)
 ```
