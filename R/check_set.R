@@ -13,8 +13,9 @@ check_set <- function(df){
   } else {
     #Check if set has proper file extensions and add it if not there
     df$filename[!str_detect(df$filename, '.txt')] <- paste(df$filename, '.txt', sep = '')
+    print('Set has been cleaned')
   }
-  print('Set has been cleaned')
 
+  #Returned cleaned dataframe
   df
 }
