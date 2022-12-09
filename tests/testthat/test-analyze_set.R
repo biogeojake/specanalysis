@@ -1,4 +1,4 @@
-test_that("multiple analysese works", {
+test_that("multiple analyses works", {
   #Import tidyverse to use map
   library(tidyverse)
 
