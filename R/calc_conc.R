@@ -10,8 +10,8 @@
 
 calc_conc <- function(samples, curve, dilution = 1){
   #Extract calibration curve information
-  slope = curve["absorbance"]
-  intercept = curve["(Intercept)"]
+  slope = curve[["absorbance"]]
+  intercept = curve[["(Intercept)"]]
 
   #Calculate concentration using curve and dilution
   p_samples <- samples %>%
